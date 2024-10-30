@@ -1,6 +1,5 @@
 package com.iyalynnyi.taskmanager.converter;
 
-import com.iyalynnyi.taskmanager.dao.model.TagEntity;
 import com.iyalynnyi.taskmanager.dao.model.TaskEntity;
 import com.iyalynnyi.taskmanager.dto.TaskDto;
 
@@ -40,10 +39,6 @@ public class TaskConverter {
         .status(task.getStatus())
         .createdDate(LocalDateTime.now())
         .dueDate(task.getDueDate())
-        .tags(task.getTags()
-            .stream()
-            .map(TagEntity::getName)
-            .toList())
         .build();
   }
 

@@ -30,5 +30,4 @@ public class TaskDto {
   private LocalDateTime dueDate;
   private String assignee;
   private String reporter;
-  private List<String> tags;
 }

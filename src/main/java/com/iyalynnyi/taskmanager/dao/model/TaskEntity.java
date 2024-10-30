@@ -67,11 +67,4 @@ public class TaskEntity {
   @Column(length = 50)
   private String reporter;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(
-      name = "task_tags",
-      joinColumns = @JoinColumn(name = "task_id"),
-      inverseJoinColumns = @JoinColumn(name = "tag_id")
-  )
-  private List<TagEntity> tags;
 }
