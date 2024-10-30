@@ -3,16 +3,11 @@ package com.iyalynnyi.taskmanager.config;
 import com.iyalynnyi.taskmanager.config.properties.H2DataSourceProperties;
 import com.iyalynnyi.taskmanager.config.properties.PostgresDataSourceProperties;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
@@ -65,7 +60,7 @@ public class DataSourceConfig {
           h2DataSource.getConnection().close();
           return "H2";
         } catch (Exception e) {
-          log.warn("Could not connect to H2 database. Postgres will be used as a failover database.", e);
+          log.error("Could not connect to H2 database. Postgres will be used as a failover database.", e);
           return "Postgres";
         }
       }

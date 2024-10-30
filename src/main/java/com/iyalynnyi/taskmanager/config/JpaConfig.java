@@ -23,9 +23,7 @@ import jakarta.persistence.EntityManagerFactory;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.iyalynnyi.taskmanager.dao.repository",
-    entityManagerFactoryRef = "entityManagerFactory",
-    transactionManagerRef = "transactionManager"
+    basePackages = "com.iyalynnyi.taskmanager.dao.repository"
 )
 public class JpaConfig {
 

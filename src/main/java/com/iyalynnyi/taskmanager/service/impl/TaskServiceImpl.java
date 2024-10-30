@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,14 +34,17 @@ public class TaskServiceImpl implements TaskService {
 
   @Override
   public Long createTask(TaskDto taskDto) {
+    log.trace("Creating task: {}", taskDto);
     TaskEntity entity = taskConverter.toEntity(taskDto);
     entity.setTags(getExistingTagsOrCreate(taskDto.getTags()));
     taskRepository.save(entity);
+    log.trace("Created task with id: {}", entity.getId());
     return entity.getId();
   }
 
   @Override
   public String updateTask(TaskDto taskDto) {
+    log.trace("Updating task: {}", taskDto);
     if (taskDto.getId() == null) {
       throw new ApiResponseException("Task Id is required to update the task!", HttpStatus.BAD_REQUEST);
     }
@@ -50,32 +52,39 @@ public class TaskServiceImpl implements TaskService {
     TaskEntity updatedEntity = taskConverter.updateEntity(taskEntity, taskDto);
     taskEntity.setTags(getExistingTagsOrCreate(taskDto.getTags()));
     taskRepository.save(updatedEntity);
+    log.trace("Updated task with id: {}", updatedEntity.getId());
     return "Task updated successfully.";
   }
 
   @Override
   public String updateStatus(Long id, TaskStatus taskStatus) {
+    log.trace("Updating status of task with id: {}", id);
     TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new ApiResponseException("Task not found!", HttpStatus.NOT_FOUND));
     taskEntity.setStatus(taskStatus);
     taskRepository.save(taskEntity);
+    log.trace("Updated status of task with id: {}", taskEntity.getId());
     return "Status updated successfully.";
   }
 
   @Override
   public List<TaskDto> getTasks() {
+    log.trace("Retrieving all tasks");
     return taskConverter.toDtos(taskRepository.findAll());
   }
 
   @Override
   public String deleteTaskById(Long id) {
+    log.trace("Deleting task with id: {}", id);
     if (!taskRepository.existsById(id)) {
       throw new ApiResponseException("Task not found!", HttpStatus.NOT_FOUND);
     }
     taskRepository.deleteById(id);
+    log.trace("Deleted task with id: {}", id);
     return "Task deleted successfully.";
   }
 
   private List<TagEntity> getExistingTagsOrCreate(List<String> tags) {
+    log.trace("Retrieving existing tags");
     List<TagEntity> existingTags = tagRepository.findAllByNameIn(tags);
 
     Map<String, TagEntity> tagMap = existingTags.stream()
