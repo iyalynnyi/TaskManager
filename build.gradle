@@ -36,6 +36,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+
 }
 
 tasks.register('resolveAllDependencies') {
@@ -50,6 +53,6 @@ tasks.register('resolveAllDependencies') {
     }
 }
 
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
+tasks.named('test') {
+    useJUnitPlatform()
+}

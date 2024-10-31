@@ -25,7 +25,6 @@ public class TaskServiceImpl implements TaskService {
   private final TaskConverter taskConverter;
   private final TaskKafkaProducer taskKafkaProducer;
 
-
   @Override
   public Long createTask(TaskDto taskDto) {
     log.trace("Creating task: {}", taskDto);
@@ -68,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public String deleteTaskById(Long id) {
     log.trace("Deleting task with id: {}", id);
-    if (taskRepositoryManagementService.existsById(id)) {
+    if (!taskRepositoryManagementService.existsById(id)) {
       throw new ApiResponseException("Task not found!", HttpStatus.NOT_FOUND);
     }
     taskRepositoryManagementService.deleteById(id);
