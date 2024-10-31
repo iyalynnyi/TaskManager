@@ -2,6 +2,7 @@ package com.iyalynnyi.taskmanager.service.impl;
 
 import com.iyalynnyi.taskmanager.dao.model.TaskEntity;
 import com.iyalynnyi.taskmanager.exception.ApiResponseException;
+import com.iyalynnyi.taskmanager.service.RepositoryManagementService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TaskRepositoryManagementService {
+public class TaskRepositoryManagementServiceImpl implements RepositoryManagementService<TaskEntity> {
 
   private final TaskTransactionManagementService transactionManagementService;
 

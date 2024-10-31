@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-  private final TaskRepositoryManagementService taskRepositoryManagementService;
+  private final TaskRepositoryManagementServiceImpl taskRepositoryManagementService;
   private final TaskConverter taskConverter;
 
 
