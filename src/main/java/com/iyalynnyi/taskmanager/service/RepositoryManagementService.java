@@ -1,6 +1,5 @@
 package com.iyalynnyi.taskmanager.service;
 
-
 import java.util.List;
 
 public interface RepositoryManagementService <ENTITY> {

@@ -2,9 +2,7 @@ package com.iyalynnyi.taskmanager.converter;
 
 import com.iyalynnyi.taskmanager.dao.model.TaskEntity;
 import com.iyalynnyi.taskmanager.dto.TaskDto;
-
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;

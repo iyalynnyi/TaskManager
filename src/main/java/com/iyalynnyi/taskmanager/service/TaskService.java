@@ -2,7 +2,6 @@ package com.iyalynnyi.taskmanager.service;
 
 import com.iyalynnyi.taskmanager.dto.TaskDto;
 import com.iyalynnyi.taskmanager.dto.TaskStatus;
-
 import java.util.List;
 
 public interface TaskService {

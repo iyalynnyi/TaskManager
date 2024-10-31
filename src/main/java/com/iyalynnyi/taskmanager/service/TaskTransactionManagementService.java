@@ -2,9 +2,7 @@ package com.iyalynnyi.taskmanager.service;
 
 import com.iyalynnyi.taskmanager.dao.repository.h2.H2TaskRepository;
 import com.iyalynnyi.taskmanager.dao.repository.postgres.PostgresTaskRepository;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

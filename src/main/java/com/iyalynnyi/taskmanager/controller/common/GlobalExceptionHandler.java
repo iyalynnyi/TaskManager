@@ -27,20 +27,31 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
   /**
-   * Handles {@link ApiResponseException} and return appropriate client response.
+   * Handles {@link ApiResponseException} and returns an appropriate client response.
    *
-   * @param ex {@link ApiResponseException} to handle
-   * @return response with appropriate client message
+   * @param ex the {@link ApiResponseException} to handle
+   * @return response with the appropriate client message and HTTP status code
    */
   @ExceptionHandler(value = {ApiResponseException.class})
   public ResponseEntity<String> handleApiException(ApiResponseException ex) {
-    log.error("Exception happened in controller", ex);
+    log.error("ApiResponseException occurred: {}", ex.getErrorMessage(), ex);
     return new ResponseEntity<>(ex.getErrorMessage(), ex.getHttpStatus());
   }
 
+  /**
+   * Handles validation errors when method arguments are not valid.
+   *
+   * @param ex the {@link MethodArgumentNotValidException} that occurs during validation
+   * @param headers the headers to include in the response
+   * @param status the HTTP status code to return
+   * @param request the current request
+   * @return response containing the validation error messages
+   */
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    log.warn("Validation failed for method argument: {}", ex.getBindingResult());
     Map<String, String> errors = new HashMap<>();
 
     ex.getBindingResult().getFieldErrors().forEach(error -> {
@@ -51,10 +62,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(errors, headers, status);
   }
 
+  /**
+   * Handles cases where the HTTP message is not readable.
+   *
+   * @param ex the {@link HttpMessageNotReadableException} that occurs
+   * @param headers the headers to include in the response
+   * @param status the HTTP status code to return
+   * @param request the current request
+   * @return response containing the error message related to unreadable HTTP message
+   */
   @Override
   protected ResponseEntity<Object> handleHttpMessageNotReadable(
       HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    log.error("HttpMessageNotReadableException occurred: {}", ex.getMessage(), ex);
     Throwable cause = ex.getCause();
+
     if (cause instanceof InvalidFormatException && cause.getMessage().contains("not one of the values accepted for Enum class")) {
       String message = ex.getMessage();
 
@@ -76,9 +98,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request data. " + ex.getMessage());
   }
 
+  /**
+   * Handles type mismatch exceptions.
+   *
+   * @param ex the {@link TypeMismatchException} that occurs
+   * @param headers the headers to include in the response
+   * @param status the HTTP status code to return
+   * @param request the current request
+   * @return response containing the error message for type mismatch
+   */
   @Override
   protected ResponseEntity<Object> handleTypeMismatch(
       TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    log.warn("Type mismatch occurred for parameter: {}", ex.getPropertyName());
+
     if (!ex.getRequiredType().isEnum()) {
       return super.handleTypeMismatch(ex, headers, status, request);
     }
@@ -89,3 +122,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .toList()));
   }
 }
+
