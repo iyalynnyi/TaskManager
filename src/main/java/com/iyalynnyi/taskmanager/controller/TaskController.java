@@ -5,7 +5,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import com.iyalynnyi.taskmanager.dto.TaskDto;
 import com.iyalynnyi.taskmanager.dto.TaskStatus;
 import com.iyalynnyi.taskmanager.service.TaskService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,12 +73,13 @@ public class TaskController {
   /**
    * Updates an existing task.
    *
-   * @param id the ID of the task to update
+   * @param id      the ID of the task to update
    * @param taskDto the task data transfer object containing updated task details
    * @return a ResponseEntity containing a success message
    */
   @PatchMapping("/{id}")
-  public ResponseEntity<String> updateTask(@PathVariable(required = true) Long id, @Valid @RequestBody TaskDto taskDto) {
+  public ResponseEntity<String> updateTask(@PathVariable(required = true) Long id,
+      @Valid @RequestBody TaskDto taskDto) {
     taskDto.setId(id);
     return ResponseEntity.ok(taskService.updateTask(taskDto));
   }
@@ -84,12 +87,13 @@ public class TaskController {
   /**
    * Updates the status of a task by its ID.
    *
-   * @param id the ID of the task to update
+   * @param id         the ID of the task to update
    * @param taskStatus the new status to set for the task
    * @return a ResponseEntity containing a success message
    */
   @PutMapping("/{id}")
-  public ResponseEntity<String> updateStatus(@PathVariable(required = true) Long id, @Valid @RequestParam(name = "status", required = true) TaskStatus taskStatus) {
+  public ResponseEntity<String> updateStatus(@PathVariable(required = true) Long id,
+      @Valid @RequestParam(name = "status", required = true) TaskStatus taskStatus) {
     return ResponseEntity.ok(taskService.updateStatus(id, taskStatus));
   }
 }
