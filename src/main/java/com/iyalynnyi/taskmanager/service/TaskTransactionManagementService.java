@@ -1,4 +1,4 @@
-package com.iyalynnyi.taskmanager.service.impl;
+package com.iyalynnyi.taskmanager.service;
 
 import com.iyalynnyi.taskmanager.dao.repository.h2.H2TaskRepository;
 import com.iyalynnyi.taskmanager.dao.repository.postgres.PostgresTaskRepository;

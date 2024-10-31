@@ -5,6 +5,7 @@ import com.iyalynnyi.taskmanager.dao.model.TaskEntity;
 import com.iyalynnyi.taskmanager.dto.TaskDto;
 import com.iyalynnyi.taskmanager.dto.TaskStatus;
 import com.iyalynnyi.taskmanager.exception.ApiResponseException;
+import com.iyalynnyi.taskmanager.service.TaskKafkaProducer;
 import com.iyalynnyi.taskmanager.service.TaskService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class TaskServiceImpl implements TaskService {
 
   private final TaskRepositoryManagementServiceImpl taskRepositoryManagementService;
   private final TaskConverter taskConverter;
+  private final TaskKafkaProducer taskKafkaProducer;
 
 
   @Override
@@ -30,6 +32,7 @@ public class TaskServiceImpl implements TaskService {
     TaskEntity entity = taskConverter.toEntity(taskDto);
     taskRepositoryManagementService.saveWithFallback(entity);
     log.trace("Created task with id: {}", entity.getId());
+    taskKafkaProducer.sendTask(taskConverter.toDto(entity));
     return entity.getId();
   }
 

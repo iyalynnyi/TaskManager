@@ -3,6 +3,7 @@ package com.iyalynnyi.taskmanager.service.impl;
 import com.iyalynnyi.taskmanager.dao.model.TaskEntity;
 import com.iyalynnyi.taskmanager.exception.ApiResponseException;
 import com.iyalynnyi.taskmanager.service.RepositoryManagementService;
+import com.iyalynnyi.taskmanager.service.TaskTransactionManagementService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +24,14 @@ public class TaskRepositoryManagementServiceImpl implements RepositoryManagement
 
   public TaskEntity saveWithFallback(TaskEntity task) {
     try {
-      return transactionManagementService.executeInH2(repository -> repository.save(task));
+      TaskEntity taskEntity = transactionManagementService.executeInH2(repository -> repository.save(task));
+      log.info("Task saved in H2.");
+      return taskEntity;
     } catch (Exception e) {
       log.error("Error saving to primary database (H2), falling back to secondary database (Postgres)", e);
-      return transactionManagementService.executeInPostgres(repository -> repository.save(task));
+      TaskEntity taskEntity = transactionManagementService.executeInPostgres(repository -> repository.save(task));
+      log.info("Task saved in Postgres.");
+      return taskEntity;
     }
   }
 

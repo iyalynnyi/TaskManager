@@ -38,6 +38,18 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+tasks.register('resolveAllDependencies') {
+    description "Resolves all transitive dependencies (e.g. to build offline later)."
+
+    doLast {
+        configurations.configureEach {
+            if (it.canBeResolved){
+                it.resolve()
+            }
+        }
+    }
 }
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}

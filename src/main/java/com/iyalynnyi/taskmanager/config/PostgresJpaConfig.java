@@ -36,7 +36,8 @@ public class PostgresJpaConfig {
     dataSource.setUsername(postgresDataSourceProperties.getUsername());
     dataSource.setPassword(postgresDataSourceProperties.getPassword());
 
-    return dataSource;  }
+    return dataSource;
+  }
 
   @Bean(name = "postgresEntityManagerFactory")
   public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(EntityManagerFactoryBuilder builder,

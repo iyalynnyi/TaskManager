@@ -1,4 +1,4 @@
-package com.iyalynnyi.taskmanager.service.impl;
+package com.iyalynnyi.taskmanager.service;
 
 import com.iyalynnyi.taskmanager.dto.TaskDto;
 
