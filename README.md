@@ -48,7 +48,7 @@ To run the Task Manager API locally, follow these steps:
 ### Base URL
 
 The base URL for the API is:
-http://localhost:8080/api/v1/tasks
+http://localhost:8090/api/v1/tasks
 
 ### Endpoints
 
@@ -61,7 +61,7 @@ http://localhost:8080/api/v1/tasks
 **Example Request**:
 
 ```bash
-curl -X GET http://localhost:8080/api/v1/tasks
+curl -X GET http://localhost:8090/api/v1/tasks
 ```
 
 #### 2. Create New Task
@@ -75,7 +75,7 @@ curl -X GET http://localhost:8080/api/v1/tasks
 **Example Request**:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/tasks \
+curl -X POST http://localhost:8090/api/v1/tasks \
 -H "Content-Type: application/json" \
 -d '{
   "title": "Sample Task",
@@ -99,7 +99,7 @@ curl -X POST http://localhost:8080/api/v1/tasks \
 **Example Request**:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/tasks/1 \
+curl -X POST http://localhost:8090/api/v1/tasks/1 \
 -H "Content-Type: application/json" \
 -d '{
   "description": "New description.",
@@ -116,7 +116,7 @@ curl -X POST http://localhost:8080/api/v1/tasks/1 \
 **Example Request**:
 
 ```bash
-curl -X DELETE http://localhost:8080/api/v1/tasks/1
+curl -X DELETE http://localhost:8090/api/v1/tasks/1
 ```
 
 #### 5. Update Task Status
@@ -129,5 +129,5 @@ curl -X DELETE http://localhost:8080/api/v1/tasks/1
 **Example Request**:
 
 ```bash
-curl -X DELETE http://localhost:8080/api/v1/tasks/1?status=DONE
+curl -X DELETE http://localhost:8090/api/v1/tasks/1?status=DONE
 ```
